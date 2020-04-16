@@ -250,12 +250,6 @@ public class Helper {
 
 	}
 
-	public static void sendKeys(WebElement webElement, CharSequence... keysToSend) {
-		WebDriverWait wait = new WebDriverWait(getDriver(), WAIT_EXPLICIT_SEC);
-		wait.until(ExpectedConditions.visibilityOf(webElement));
-		webElement.clear();
-		webElement.sendKeys(keysToSend);
-	}
 
 	public static void sendKeysbyXpath(By Xpath, CharSequence... keysToSend) {
 		WebDriverWait wait = new WebDriverWait(getDriver(), WAIT_EXPLICIT_SEC);
@@ -265,17 +259,7 @@ public class Helper {
 		wl.sendKeys(keysToSend);
 	}
 
-	public static void handleWindow(String copyText, WebDriver driver) throws InterruptedException {
 
-		((JavascriptExecutor) driver).executeScript("window.open()");
-		ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-		driver.switchTo().window(tabs.get(1));
-		driver.get(copyText);
-		Thread.sleep(5000);
-		driver.close();
-		driver.switchTo().window(tabs.get(0));
-
-	}
 
 	public static void clickByAction(WebDriver driver, By Xpath) {
 
@@ -333,5 +317,24 @@ public class Helper {
 		}
 
 	}
+	
+	
+	
+	public static boolean isClickable(WebElement webe)      
+	{
+	    try
+	    {
+	        WebDriverWait wait = new WebDriverWait(Helper.getDriver(), 10);
+	        wait.until(ExpectedConditions.elementToBeClickable(webe));
+	        return true;
+	    }
+	    catch (Exception e)
+	    {
+	        return false;
+	    }
+	}
+	
+	
+	
 
 }

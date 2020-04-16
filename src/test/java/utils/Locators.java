@@ -10,21 +10,11 @@ public class Locators {
 	public static By addShareTextField = By.xpath("//input[@placeholder='Enter at least 3 characters of symbol or name']");
 	public static By listOfSearch = By.xpath("//ul[@class='search_results']//li//div//span//b");
 
-	
-	//ul[@class='search_results']//li//div//span//b
-	
-	
-	public static By timeInterval = By.xpath("//span[@class='intervalText ng-binding']");
-	public static By listTimeinterval = By.xpath("//div[@class='headerDropdown intervalDD']//div");
-//	public static By compareBttn = By.xpath("//span[contains(text(),'COMPARE')]");
-
 	public static By graph = By.xpath("//div[@class='stx-subholder']");
 	public static By chartIcon = By
 			.xpath("//div[@class='headerInlineTagLabel no-wclick']//*[name()='use' and @*='#upico-chart-candle']");
 
 	public static By listGraph = By.xpath("//div[@class='headerDropdown intervalDD']//div");
-
-	
 	public static By signIn = By.xpath("//*[contains(text(),'Sign in')]");
 	public static By signInID = By.xpath("//input[@id='login-id']");
 	public static By signInPSW = By.xpath("//input[@id='login-password']");

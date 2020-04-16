@@ -55,16 +55,38 @@ public class UpstoxPage {
 	public static By listShare = By.xpath("//div[@class='item']//div[@class='name ng-binding']");
 	public static By shareListBlock = By.xpath("//ul[@class='ui-sortable']");
 	public static By detailBttn = By.xpath("//a[contains(text(),'DETAILS')]");
+	
 
-	By orderTextfield = By.xpath(
-			"//input[@class='inp-no-lot bc-border ng-pristine ng-valid ng-isolate-scope ng-valid-maxlength ng-touched']");
+	//By orderTextfield = By.xpath(
+		//	"//input[@class='inp-no-lot bc-border ng-pristine ng-valid ng-isolate-scope ng-valid-maxlength ng-touched']");
+	      
+
+	By orderTextfield = By.xpath("//input[@class='inp-lot bc-border ng-pristine ng-valid ng-isolate-scope ng-valid-maxlength ng-touched']");
+
 	By orderPrice = By.xpath("//div[@class='input-div']//input[@ng-model='fieldData.price']");
 	By orderQuanatity = By.xpath("//div[@class='input-div']//input[@ng-model='fieldData.disclosedQty']");
 	By buyBTTN = By.xpath("//button[@class='button hover_button ng-binding green-background']");
 	By buyBTTNCONFIRMORDER = By.xpath("//div[@class='ng-binding ng-scope'][contains(text(),'BUY')]");
-	By positionTab = By.xpath("//button[contains(text(),'Delivery')]");
+	/*
+	 * By positionTab = By.xpath("//button[contains(text(),'Delivery')]");
+	 */	
+	
 	By poistionList = By.xpath("//div[@class='dd-selectList']//div");
 	By poistionBlock = By.xpath("//div[@class='dd-selectList']");
+	
+	By positionTab = By.xpath("//div[@class='tab positions_tab']");
+	By squareOFF = By.xpath("//button[@class='square_off']");
+	By checkBOX = By.xpath("//div[@class='ui-grid-cell ng-scope ui-grid-coluiGrid-0011']//div[@class='ui-grid-cell-contents ng-scope']//*[local-name()='svg']");
+	By squareOFFYES = By.xpath(" //button[@class='overlay-sgnbdy-two']");
+
+	
+	
+	
+
+	
+	
+
+	
 
 	public UpstoxPage() throws IOException {
 
@@ -88,7 +110,6 @@ public class UpstoxPage {
 
 		//Helper.waitTillElePresent(Helper.getDriver(), UpstoxPage.shareListBlock);
 		Helper.waitForElementToBeClickable(graph);
-
 		Helper.selectDataFromList(UpstoxPage.listShare, prop.getProperty("shareName"), Helper.getDriver(),
 				UpstoxPage.shareListBlock);
 
@@ -100,15 +121,35 @@ public class UpstoxPage {
 		WebElement elementOpen = Helper.getDriver().findElement(detailBttn);
 		elementOpen.click();
 		Helper.clickElementByXPath(Locators.buyBttn);
+		
 		Helper.getDriver().switchTo().activeElement().sendKeys(Keys.TAB);
+		
 		Helper.sendKeysbyXpath(orderTextfield, prop.getProperty("OrderQuantity"));
-		Helper.getDriver().switchTo().activeElement().sendKeys(Keys.TAB);
-		Helper.sendKeysbyXpath(orderQuanatity, prop.getProperty("OrderDISCLOSEDQuantity"));
-		Helper.clickElementByXPath(buyBTTN);
-		Helper.clickElementByXPath(buyBTTNCONFIRMORDER);
-		Helper.clickElementByXPath(Locators.closeBttnPOPUP);
-		Helper.closeBrowser();
+		
 
+		/*
+		 * Helper.getDriver().switchTo().activeElement().sendKeys(Keys.TAB);
+		 * Helper.sendKeysbyXpath(orderQuanatity,
+		 * prop.getProperty("OrderDISCLOSEDQuantity"));
+		 */
+		
+		
+		  Helper.clickElementByXPath(buyBTTN);
+		  Helper.clickElementByXPath(buyBTTNCONFIRMORDER);
+		  Helper.clickElementByXPath(Locators.closeBttnPOPUP); 
+		  Helper.clickElementByXPath(positionTab); 
+		  Helper.clickElementByXPath(checkBOX); 
+		  Helper.clickElementByXPath(squareOFF); 
+		  Helper.clickElementByXPath(squareOFFYES); 
+
+	
+		  WebElement checkboxElement=	  Locators.getWebElement(Helper.getDriver(), checkBOX);
+		  
+		  boolean bst=Helper.isClickable(checkboxElement);
+		 System.out.println("Checkbox Value is" +bst+ " i.e. Non Clickable");
+		 
+			  Helper.closeBrowser();
+			 		 
 	}
 
 }
