@@ -4,7 +4,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.openqa.selenium.By;
@@ -12,6 +14,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -38,7 +41,15 @@ public class Helper {
 
 	public static void driverInitializationChrome() {
 		System.setProperty("webdriver.chrome.driver", config.getChromeDriverPath());
-		driver = new ChromeDriver();
+
+		Map<String, Object> prefs = new HashMap<String, Object>();
+
+		prefs.put("profile.default_content_setting_values.notifications", 2);
+		ChromeOptions options = new ChromeOptions();
+		options.setExperimentalOption("prefs", prefs);
+//		WebDriver driver = new ChromeDriver(options);
+
+		driver = new ChromeDriver(options);
 
 	}
 
@@ -67,7 +78,6 @@ public class Helper {
 		// Helper.getDriver().navigate().refresh();
 
 	}
-
 
 	public static void clickElementByXPath(By Xpath) {
 
@@ -164,25 +174,46 @@ public class Helper {
 		}
 	}
 
-	public static void selectDataFromList(By List, String Text, WebDriver driver, By dropdwn) {
-
-		driver.findElement(dropdwn).click();
+	public static boolean selectDataFromList(By List, String Text, WebDriver driver, By dropdwn) {
+		boolean flag= false;
+		
+		System.out.println("inside selectDta frm lis");
+		
+		//driver.findElement(dropdwn).click();
 
 		List<WebElement> list = driver.findElements(List);
+		
 
 		for (int i = 0; i < list.size(); i++)
 
 		{
-
-			if (list.get(i).getText().contains(Text)) {
-
+			if (list.get(i).getAttribute("title").contains(Text)) {
 				list.get(i).click();
-
+				flag=true;
 				break;
 
 			}
 
 		}
+		return flag;
+
+	}
+
+	public static boolean getDataInList(By xpath) {
+
+		System.out.println("insde getDataInList");
+		WebElement element = driver.findElement(xpath);
+		System.out.println(element);
+
+/*		if (element != null) {*/
+			element.click();
+			
+			System.out.println("insode ");
+			/* return true; */
+
+//		}
+
+		return false;
 
 	}
 
@@ -199,7 +230,7 @@ public class Helper {
 
 			if (list.get(i).getText().contains(Text)) {
 
-				System.out.println(list.get(i).getText() +    "@@@@@@@@@@@@");
+				System.out.println(list.get(i).getText() + "@@@@@@@@@@@@");
 
 				list.get(i).click();
 
@@ -217,14 +248,6 @@ public class Helper {
 		String text = driver.findElement(xpath).getText();
 
 		return text;
-
-	}
-
-	public static String getTitle(String bringTheTitle) {
-
-		bringTheTitle = driver.getTitle();
-
-		return bringTheTitle;
 
 	}
 
@@ -250,33 +273,12 @@ public class Helper {
 
 	}
 
-
 	public static void sendKeysbyXpath(By Xpath, CharSequence... keysToSend) {
 		WebDriverWait wait = new WebDriverWait(getDriver(), WAIT_EXPLICIT_SEC);
 		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(Xpath));
 		WebElement wl = Locators.getWebElement(driver, Xpath);
 		wl.clear();
 		wl.sendKeys(keysToSend);
-	}
-
-
-
-	public static void clickByAction(WebDriver driver, By Xpath) {
-
-		WebElement element = Helper.driver.findElement(Xpath);
-		Actions actions = new Actions(Helper.driver);
-		actions.moveToElement(element).click().perform();
-
-	}
-
-	public static void moveTo(WebElement element) throws InterruptedException {
-
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].scrollIntoView();", element);
-		js.executeScript("window.scrollBy(0,-100);", element);
-		Actions actions = new Actions(driver);
-		actions.moveToElement(element).click().build().perform();
-
 	}
 
 	public static void closeBrowser() throws InterruptedException {
@@ -288,27 +290,26 @@ public class Helper {
 		driver = null;
 
 	}
-	
+
 	public static void waitTillElePresent(WebDriver driver, By Locator) {
-	
+
 		/*
 		 * System.out.println("insiderwaitTillElePresent ");
-		 */	
+		 */
 		WebDriverWait wait = new WebDriverWait(driver, 20);
-	wait.until(ExpectedConditions.presenceOfElementLocated(Locator)); 
-	
-	
+		wait.until(ExpectedConditions.presenceOfElementLocated(Locator));
+
 	}
+
 	public static void one() {
 		boolean value = false;
-		
+
 		if (value == false) {
-	
-		boolean valueGET= Helper.selectDataFromList1(UpstoxPage.listShare, prop.getProperty("shareName"),
-				Helper.getDriver(), UpstoxPage.shareListBlock);
+
+			boolean valueGET = Helper.selectDataFromList1(UpstoxPage.listShare, prop.getProperty("shareName"),
+					Helper.getDriver(), UpstoxPage.shareListBlock);
 		}
-		
-		
+
 		if (value == false) {
 
 			Helper.clickElementByXPath(Locators.addShareBTTN);
@@ -317,24 +318,15 @@ public class Helper {
 		}
 
 	}
-	
-	
-	
-	public static boolean isClickable(WebElement webe)      
-	{
-	    try
-	    {
-	        WebDriverWait wait = new WebDriverWait(Helper.getDriver(), 10);
-	        wait.until(ExpectedConditions.elementToBeClickable(webe));
-	        return true;
-	    }
-	    catch (Exception e)
-	    {
-	        return false;
-	    }
+
+	public static boolean isClickable(WebElement webe) {
+		try {
+			WebDriverWait wait = new WebDriverWait(Helper.getDriver(), 10);
+			wait.until(ExpectedConditions.elementToBeClickable(webe));
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
-	
-	
-	
 
 }
