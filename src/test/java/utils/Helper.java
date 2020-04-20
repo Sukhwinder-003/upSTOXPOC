@@ -14,6 +14,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -41,6 +42,7 @@ public class Helper {
 
 	public static void driverInitializationChrome() {
 		System.setProperty("webdriver.chrome.driver", config.getChromeDriverPath());
+		System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY,"true");
 
 		Map<String, Object> prefs = new HashMap<String, Object>();
 
@@ -179,15 +181,22 @@ public class Helper {
 		
 		System.out.println("inside selectDta frm lis");
 		
-		//driver.findElement(dropdwn).click();
-
-		List<WebElement> list = driver.findElements(List);
+		System.out.println(List);
+		System.out.println(dropdwn);
 		
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@");
+		
+		List<WebElement> list = Helper.getDriver().findElements(List);
 
 		for (int i = 0; i < list.size(); i++)
-
+			
 		{
+			
+			System.out.println("inside for loop");
 			if (list.get(i).getAttribute("title").contains(Text)) {
+
+				System.out.println(list.get(i));
+				
 				list.get(i).click();
 				flag=true;
 				break;

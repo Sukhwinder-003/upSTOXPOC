@@ -17,7 +17,13 @@ public class BuyShare {
 	@Test(priority = 1)
 	public void buyShare() throws InterruptedException {
 
-		upPage.process();
+		upPage.loginWithCredential();
+		upPage.addShare();
+		upPage.buyShare();
+		upPage.squareOff();
+
+		
+		
 
 	}
 

@@ -29,6 +29,7 @@ public class Locators {
 	public static By closeBttn = By.xpath("//div[@class='oe-close-btn']//*[local-name()='svg']");
 	public static By closeBttnPOPUP = By.xpath("//div[contains(@class,'div-ider pholder draggable')]//div[@class='pointer ng-scope']//*[local-name()='svg']");
 
+//	  1 Rel XPath //div[contains(@class,'div-ider pholder draggable')]//div[@class='pointer ng-scope']//*[local-name()='svg']
 
 
 	
